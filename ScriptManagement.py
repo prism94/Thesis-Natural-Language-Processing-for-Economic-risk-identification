@@ -1,5 +1,5 @@
 import multiprocessing
-from Investing_com_news_scrapper_Headlines_def import fetch_data
+from RSS_news_scrapper_Headlines_def import fetch_data
 import pickle
 import datetime
 import time
