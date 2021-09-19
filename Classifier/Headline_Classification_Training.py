@@ -1,24 +1,29 @@
 import pickle
 import numpy as np
 import pandas as pd
-from gensim.models import word2vec
-
+from gensim.models import word2vec, KeyedVectors
 
 max_padding = 5
-vec_length = 100
+vec_length = 300
 
-with open(f'Word_Arrays.pkl', 'rb') as f:
+array_loc = 'D:/Thesis_Model'
+vec_loc = 'C:/Users/User/OneDrive/Python_scripts/Thesis/Classifier'
+
+with open(f'{array_loc}/Word_Arrays.pkl', 'rb') as f:
     training, testing = pickle.load(f)
 
-w2v = word2vec.Word2Vec.load('w2v')
+#w2v = word2vec.Word2Vec.load('w2v') if for pretrained
+w2v = KeyedVectors.load(f'{vec_loc}/glove.modeel')
+
 
 def sentence_to_sequence(model, text, vec_length):
     splits = text.split(' ')
     sequence = []
     
     for s in splits:
-        if s in model.wv:
-            sequence.append(model.wv[s].tolist())
+        if s in model.key_to_index:
+            sequence.append(model.get_vector(s))
+            #sequence.append(model.wv[s].tolist()) #If not glove
         else:
             sequence.append([0 for i in range(vec_length)])
     

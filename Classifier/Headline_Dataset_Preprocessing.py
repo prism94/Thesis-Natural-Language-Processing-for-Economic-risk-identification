@@ -7,11 +7,11 @@ file_dir = 'C:/Users/User/OneDrive/Python_scripts/Thesis/Classifier'
 
 training_split = 0.75
 
-law = pd.read_csv('USNEWS.csv')
-bus = pd.read_csv('USNEWS_Business.csv')
+law = pd.read_csv('USNEWS_Classified.csv')
+bus = pd.read_csv('USNEWS_Business_Classified.csv')
 
-law_gl = pd.read_csv('GlobalNews.csv')
-bus_gl =  pd.read_csv('GlobalNews_Business.csv')
+law_gl = pd.read_csv('GlobalNews_Classified.csv')
+bus_gl =  pd.read_csv('GlobalNews_Business_Classified.csv')
 
 
 def drop_lawsuits(bus, law):
