@@ -16,18 +16,18 @@ from sklearn.metrics import confusion_matrix
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-dir_ = 'D:/Thesis_Model/Full_Article_Adjusted'
+dir_ = 'D:/Thesis_Model/Headlines - Glove'
 
 class_dir = 'D:/Thesis_Model'
 
-max_length = 6000
+max_length = 50
 #num_w = 15000
 vec_length = 300
 
-with open(f'{class_dir}/Word_Arrays_Article_Altered.pkl', 'rb') as f:
+with open(f'{class_dir}/Word_Arrays.pkl', 'rb') as f:
     training, testing = pickle.load(f)
 
-with open(f'{class_dir}/Token_Data_Article.pkl', 'rb') as f:
+with open(f'{class_dir}/Token_Data.pkl', 'rb') as f:
     tok, embedding_matrix = pickle.load(f)
 
 num_w = len(tok.word_index) + 1
@@ -53,7 +53,22 @@ y_test = y_test.astype(int)
 
 #
 
-model_dict = {'LSTM':[LSTM(500, input_shape=X_train.shape[1:]),
+model_dict = {'LSTM': [LSTM(250, input_shape=X_train.shape[1:]),
+                       100],
+              'RNN': [SimpleRNN(250, input_shape=X_train.shape[1:]),
+                      100],
+              'GRU': [GRU(250, input_shape=X_train.shape[1:]),
+         100],
+              'BILSTM': [Bidirectional(LSTM(250, input_shape=X_train.shape[1:])),
+         100],
+              'CNN':[Conv1D(250, 3),
+                     MaxPooling1D(),
+                     Flatten(),
+                     100,
+                     50],
+              }
+
+''''LSTM':[LSTM(500, input_shape=X_train.shape[1:]),
                        150],
               
               'RNN': [SimpleRNN(500, input_shape=X_train.shape[1:], activation='relu'),
@@ -75,7 +90,7 @@ model_dict = {'LSTM':[LSTM(500, input_shape=X_train.shape[1:]),
                      LSTM(500),
                      100,
                      50]
-              }
+'''
 
 """
 'LSTM':[LSTM(500, input_shape=X_train.shape[1:]),
@@ -102,6 +117,7 @@ for key in model_dict.keys():
     model = Sequential()
     
     model.add(Embedding(num_w, vec_length, weights=[embedding_matrix], input_length=max_length, trainable=False))
+    #model.add(Embedding(num_w, vec_length, input_length=max_length))
     
     for i in range(len(model_dict[key])):
         if type(model_dict[key][i]) == int:
@@ -136,4 +152,4 @@ for key in model_dict.keys():
 
 df = pd.DataFrame(results_dict)
 
-df.to_csv('Model_Results_Article_Altered.csv')
+df.to_csv('Headlines-GLOVE-v10.csv')

@@ -32,6 +32,7 @@ if __name__ == '__main__':
             del_list = []
             for ass in proc.keys():
                 if proc[ass].is_alive() == False:
+                    _list = []
                     open_processes -= 1
                     proc[ass].terminate()
                     del_list.append(ass)

@@ -136,6 +136,9 @@ if __name__ == '__main__':
                 del return_dict[dr]
         
         if dropped == True:
-            with open('complete_list_news.pkl', 'wb') as f:
-                    pickle.dump(complete_list,f)
+            try:
+                with open('complete_list_news.pkl', 'wb') as f:
+                        pickle.dump(complete_list,f)
+            except:
+                print('Did not work')
 

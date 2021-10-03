@@ -1,18 +1,16 @@
 import pickle
 import matplotlib.pyplot as plt
 
-file_loc = 'D:/Thesis_Model/Headlines - Non Pretrained'
-outcome = 'Full_Articles'
+file_loc = 'D:/Thesis_Model/Headlines - Glove'
 
-models = ['BILSTM',
+models = ['LSTM',
+          'RNN',
           'CNN',
-          #'CNN_LSTM',
           'GRU',
-          'LSTM',
-          'RNN'
+          'BILSTM',
           ]
 
-BERT = []#'History-Headlines-Final.pkl']#'History-Article-NonPretrained-1200.pkl']
+BERT = ['History-Headlines-Final.pkl']#'History-Article.pkl']
 
 data = {}
 
@@ -34,13 +32,21 @@ for b in BERT:
     for key in history.keys():
         data[f'BERT'][key] = history[key]
 
+name_dict = {'RNN-relu-fat':'RNN',
+             }
+
 #Prep Data Tables
-plotter = 'val_accuracy'
+plotter = 'val_accuracy'#'val_loss'#
 max_length = 15
 
 for key in data.keys():
+    if key in name_dict:
+        keyer = name_dict[key]
+    else:
+        keyer = key
     y = data[key][plotter][:max_length]
     x = [i for i in range(1, max_length+1)]
-    plt.plot(x, y, label=f'{key}')
+    plt.plot(x, y, label=f'{keyer}')
 plt.legend()
 plt.show()
+

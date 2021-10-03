@@ -9,9 +9,6 @@ import pickle
 import numpy as np
 
 
-
-
-
 max_length = 6000
 num_w = 85000
 vec_length = 300
