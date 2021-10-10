@@ -43,16 +43,18 @@ X_test = pad_sequences(test, padding='post', truncating = 'post', maxlen=max_len
 vocab_size = len(tok.word_index) + 1
 
 embeddings_index = dict()
+
 f = open('D:/Thesis_Data/Word_Embeddings/glove.6B.300d.txt', 'r', encoding="utf8")
-for line in f:
-	values = line.split()
+
+for l in f:
+	values = l.split()
 	word = values[0]
 	coefs = np.asarray(values[1:], dtype='float32')
 	embeddings_index[word] = coefs
 f.close()
 
 
-# create a weight matrix for words in training docs
+
 embedding_matrix = np.zeros((vocab_size, 300))
 for word, i in tok.word_index.items():
 	embedding_vector = embeddings_index.get(word)
